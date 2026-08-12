@@ -1,0 +1,40 @@
+Run: GF-1786562592191 (greenfield)
+Final status: COMPLETED_SUCCESS
+Metrics: stages=7 succeeded=7 failed=0 rolledBack=0 skipped=0 successRate=100.0% retries=0 retryFreq=0.00 rollbackFreq=0.00 mttr=n/a e2eLatency=1480ms
+
+-- stage statuses --
+  release-readiness      SUCCEEDED
+  requirements           SUCCEEDED
+  task-decomposition     SUCCEEDED
+  design                 SUCCEEDED
+  implementation         SUCCEEDED
+  testing                SUCCEEDED
+  documentation          SUCCEEDED
+
+-- full audit timeline --
+2026-08-12T19:23:12.218786Z [GF-1786562592191] RUN_STARTED              stage=-                    actor=system                   workflow started with 7 stages
+2026-08-12T19:23:12.221311Z [GF-1786562592191] STAGE_ENTERED            stage=requirements         actor=system                   entering stage
+2026-08-12T19:23:12.238016Z [GF-1786562592191] STAGE_ATTEMPT_STARTED    stage=requirements         actor=agent:requirements       attempt 1/2
+2026-08-12T19:23:12.277736Z [GF-1786562592191] STAGE_SUCCEEDED          stage=requirements         actor=agent:requirements       Requirement interpreted (1 functional, 1 non-functional); ambiguityDetected=false
+2026-08-12T19:23:12.279331Z [GF-1786562592191] STAGE_ENTERED            stage=design               actor=system                   entering stage
+2026-08-12T19:23:12.279360Z [GF-1786562592191] STAGE_ATTEMPT_STARTED    stage=design               actor=agent:design             attempt 1/2
+2026-08-12T19:23:12.286602Z [GF-1786562592191] STAGE_SUCCEEDED          stage=design               actor=agent:design             Design produced: 1 API change(s)
+2026-08-12T19:23:12.287246Z [GF-1786562592191] STAGE_ENTERED            stage=task-decomposition   actor=system                   entering stage
+2026-08-12T19:23:12.287274Z [GF-1786562592191] STAGE_ATTEMPT_STARTED    stage=task-decomposition   actor=agent:task-decomposition attempt 1/2
+2026-08-12T19:23:12.306742Z [GF-1786562592191] STAGE_SUCCEEDED          stage=task-decomposition   actor=agent:task-decomposition Decomposed into 5 tasks
+2026-08-12T19:23:12.307107Z [GF-1786562592191] STAGE_ENTERED            stage=implementation       actor=system                   entering stage
+2026-08-12T19:23:12.307150Z [GF-1786562592191] STAGE_ATTEMPT_STARTED    stage=implementation       actor=agent:implementation     attempt 1/3
+2026-08-12T19:23:12.316412Z [GF-1786562592191] STAGE_SUCCEEDED          stage=implementation       actor=agent:implementation     Change plan drafted (attempt 1)
+2026-08-12T19:23:12.316721Z [GF-1786562592191] STAGE_ENTERED            stage=testing              actor=system                   entering stage
+2026-08-12T19:23:12.316745Z [GF-1786562592191] STAGE_ATTEMPT_STARTED    stage=testing              actor=agent:testing            attempt 1/2
+2026-08-12T19:23:12.317197Z [GF-1786562592191] STAGE_ENTERED            stage=documentation        actor=system                   entering stage
+2026-08-12T19:23:12.317224Z [GF-1786562592191] STAGE_ATTEMPT_STARTED    stage=documentation        actor=agent:documentation      attempt 1/2
+2026-08-12T19:23:12.375141Z [GF-1786562592191] STAGE_SUCCEEDED          stage=documentation        actor=agent:documentation      Documentation written to docs/generated/GF-1786562592191-summary.md
+2026-08-12T19:23:13.653794Z [GF-1786562592191] STAGE_SUCCEEDED          stage=testing              actor=agent:testing            All 27 tests passed
+2026-08-12T19:23:13.654021Z [GF-1786562592191] STAGE_ENTERED            stage=release-readiness    actor=system                   entering stage
+2026-08-12T19:23:13.655167Z [GF-1786562592191] STAGE_WAITING_APPROVAL   stage=release-readiness    actor=system                   paused for human approval
+2026-08-12T19:23:13.680591Z [GF-1786562592191] STAGE_APPROVED           stage=release-readiness    actor=human:ronny.ables        Verified test summary and generated docs; approved for release.
+2026-08-12T19:23:13.680807Z [GF-1786562592191] STAGE_ENTERED            stage=release-readiness    actor=system                   entering stage
+2026-08-12T19:23:13.680948Z [GF-1786562592191] STAGE_ATTEMPT_STARTED    stage=release-readiness    actor=agent:release-readiness  attempt 1/1
+2026-08-12T19:23:13.681994Z [GF-1786562592191] STAGE_SUCCEEDED          stage=release-readiness    actor=agent:release-readiness  Release checklist passed: {testsPassed=true, docsPresent=true, decisionLineageRecorded=true}
+2026-08-12T19:23:13.684931Z [GF-1786562592191] RUN_COMPLETED            stage=-                    actor=system                   final status=COMPLETED_SUCCESS

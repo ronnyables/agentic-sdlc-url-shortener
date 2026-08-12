@@ -1,0 +1,81 @@
+Run: AMB-1786562961488 (ambiguous)
+Final status: COMPLETED_SUCCESS
+Metrics: stages=7 succeeded=7 failed=0 rolledBack=0 skipped=0 successRate=100.0% retries=2 retryFreq=0.29 rollbackFreq=0.00 mttr=433ms e2eLatency=835ms
+
+-- stage statuses --
+  release-readiness      SUCCEEDED
+  requirements           SUCCEEDED
+  task-decomposition     SUCCEEDED
+  design                 SUCCEEDED
+  implementation         SUCCEEDED
+  testing                SUCCEEDED
+  documentation          SUCCEEDED
+
+-- full audit timeline --
+2026-08-12T19:29:21.523694Z [AMB-1786562961488] RUN_STARTED              stage=-                    actor=system                   workflow started with 7 stages
+2026-08-12T19:29:21.526285Z [AMB-1786562961488] STAGE_ENTERED            stage=requirements         actor=system                   entering stage
+2026-08-12T19:29:21.546310Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=requirements         actor=agent:requirements       attempt 1/2
+2026-08-12T19:29:21.588096Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=requirements         actor=agent:requirements       Requirement interpreted (1 functional, 0 non-functional); ambiguityDetected=true
+2026-08-12T19:29:21.590171Z [AMB-1786562961488] STAGE_ENTERED            stage=design               actor=system                   entering stage
+2026-08-12T19:29:21.590202Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=design               actor=agent:design             attempt 1/2
+2026-08-12T19:29:21.599657Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=design               actor=agent:design             Design produced: 1 API change(s)
+2026-08-12T19:29:21.600374Z [AMB-1786562961488] STAGE_ENTERED            stage=task-decomposition   actor=system                   entering stage
+2026-08-12T19:29:21.600401Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=task-decomposition   actor=agent:task-decomposition attempt 1/2
+2026-08-12T19:29:21.618356Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=task-decomposition   actor=agent:task-decomposition Decomposed into 5 tasks
+2026-08-12T19:29:21.619394Z [AMB-1786562961488] STAGE_ENTERED            stage=implementation       actor=system                   entering stage
+2026-08-12T19:29:21.619442Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=implementation       actor=agent:implementation     attempt 1/3
+2026-08-12T19:29:21.634159Z [AMB-1786562961488] GUARDRAIL_BLOCKED        stage=implementation       actor=guardrail:security       possible hardcoded secret detected in stage output (pattern: (?i)api[_-]?key\s*=\s*['"]?\S+)
+2026-08-12T19:29:21.634555Z [AMB-1786562961488] STAGE_ATTEMPT_FAILED     stage=implementation       actor=agent:implementation     post-execution checks blocked the result
+2026-08-12T19:29:21.646932Z [AMB-1786562961488] STAGE_RETRY_SCHEDULED    stage=implementation       actor=system                   retrying in 20ms (attempt 2)
+2026-08-12T19:29:21.667415Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=implementation       actor=agent:implementation     attempt 2/3
+2026-08-12T19:29:21.667828Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=implementation       actor=agent:implementation     Change plan drafted (attempt 2)
+2026-08-12T19:29:21.668991Z [AMB-1786562961488] STAGE_ENTERED            stage=testing              actor=system                   entering stage
+2026-08-12T19:29:21.669018Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=testing              actor=agent:testing            attempt 1/2
+2026-08-12T19:29:21.669102Z [AMB-1786562961488] STAGE_ENTERED            stage=documentation        actor=system                   entering stage
+2026-08-12T19:29:21.669130Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=documentation        actor=agent:documentation      attempt 1/2
+2026-08-12T19:29:21.721647Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=documentation        actor=agent:documentation      Documentation written to docs/generated/AMB-1786562961488-summary.md
+2026-08-12T19:29:21.979994Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=testing              actor=agent:testing            All 21 tests passed
+2026-08-12T19:29:21.980345Z [AMB-1786562961488] STAGE_ENTERED            stage=release-readiness    actor=system                   entering stage
+2026-08-12T19:29:21.984110Z [AMB-1786562961488] STAGE_WAITING_APPROVAL   stage=release-readiness    actor=system                   paused for human approval
+2026-08-12T19:29:22.007380Z [AMB-1786562961488] STAGE_APPROVED           stage=release-readiness    actor=human:ronny.ables        Approved initial (assumption-based) release.
+2026-08-12T19:29:22.007556Z [AMB-1786562961488] STAGE_ENTERED            stage=release-readiness    actor=system                   entering stage
+2026-08-12T19:29:22.007631Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=release-readiness    actor=agent:release-readiness  attempt 1/1
+2026-08-12T19:29:22.008483Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=release-readiness    actor=agent:release-readiness  Release checklist passed: {testsPassed=true, docsPresent=true, decisionLineageRecorded=true}
+2026-08-12T19:29:22.009970Z [AMB-1786562961488] RUN_COMPLETED            stage=-                    actor=system                   final status=COMPLETED_SUCCESS
+2026-08-12T19:29:22.029846Z [AMB-1786562961488] STAGE_INVALIDATED        stage=requirements         actor=system                   human clarified the originally ambiguous requirement
+2026-08-12T19:29:22.029853Z [AMB-1786562961488] STAGE_INVALIDATED        stage=design               actor=system                   human clarified the originally ambiguous requirement
+2026-08-12T19:29:22.029856Z [AMB-1786562961488] STAGE_INVALIDATED        stage=task-decomposition   actor=system                   human clarified the originally ambiguous requirement
+2026-08-12T19:29:22.029859Z [AMB-1786562961488] STAGE_INVALIDATED        stage=implementation       actor=system                   human clarified the originally ambiguous requirement
+2026-08-12T19:29:22.029862Z [AMB-1786562961488] STAGE_INVALIDATED        stage=testing              actor=system                   human clarified the originally ambiguous requirement
+2026-08-12T19:29:22.029877Z [AMB-1786562961488] STAGE_INVALIDATED        stage=documentation        actor=system                   human clarified the originally ambiguous requirement
+2026-08-12T19:29:22.029880Z [AMB-1786562961488] STAGE_INVALIDATED        stage=release-readiness    actor=system                   human clarified the originally ambiguous requirement
+2026-08-12T19:29:22.029947Z [AMB-1786562961488] RUN_STARTED              stage=-                    actor=system                   workflow started with 7 stages
+2026-08-12T19:29:22.030149Z [AMB-1786562961488] STAGE_ENTERED            stage=requirements         actor=system                   entering stage
+2026-08-12T19:29:22.030185Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=requirements         actor=agent:requirements       attempt 1/2
+2026-08-12T19:29:22.030907Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=requirements         actor=agent:requirements       Requirement interpreted (1 functional, 0 non-functional); ambiguityDetected=false
+2026-08-12T19:29:22.031220Z [AMB-1786562961488] STAGE_ENTERED            stage=design               actor=system                   entering stage
+2026-08-12T19:29:22.031244Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=design               actor=agent:design             attempt 1/2
+2026-08-12T19:29:22.031355Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=design               actor=agent:design             Design produced: 1 API change(s)
+2026-08-12T19:29:22.031679Z [AMB-1786562961488] STAGE_ENTERED            stage=task-decomposition   actor=system                   entering stage
+2026-08-12T19:29:22.031705Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=task-decomposition   actor=agent:task-decomposition attempt 1/2
+2026-08-12T19:29:22.031876Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=task-decomposition   actor=agent:task-decomposition Decomposed into 5 tasks
+2026-08-12T19:29:22.032172Z [AMB-1786562961488] STAGE_ENTERED            stage=implementation       actor=system                   entering stage
+2026-08-12T19:29:22.032198Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=implementation       actor=agent:implementation     attempt 1/3
+2026-08-12T19:29:22.032365Z [AMB-1786562961488] GUARDRAIL_BLOCKED        stage=implementation       actor=guardrail:security       possible hardcoded secret detected in stage output (pattern: (?i)api[_-]?key\s*=\s*['"]?\S+)
+2026-08-12T19:29:22.032375Z [AMB-1786562961488] STAGE_ATTEMPT_FAILED     stage=implementation       actor=agent:implementation     post-execution checks blocked the result
+2026-08-12T19:29:22.032389Z [AMB-1786562961488] STAGE_RETRY_SCHEDULED    stage=implementation       actor=system                   retrying in 20ms (attempt 2)
+2026-08-12T19:29:22.052682Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=implementation       actor=agent:implementation     attempt 2/3
+2026-08-12T19:29:22.052923Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=implementation       actor=agent:implementation     Change plan drafted (attempt 2)
+2026-08-12T19:29:22.053284Z [AMB-1786562961488] STAGE_ENTERED            stage=testing              actor=system                   entering stage
+2026-08-12T19:29:22.053343Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=testing              actor=agent:testing            attempt 1/2
+2026-08-12T19:29:22.053363Z [AMB-1786562961488] STAGE_ENTERED            stage=documentation        actor=system                   entering stage
+2026-08-12T19:29:22.053389Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=documentation        actor=agent:documentation      attempt 1/2
+2026-08-12T19:29:22.059368Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=documentation        actor=agent:documentation      Documentation written to docs/generated/AMB-1786562961488-summary.md
+2026-08-12T19:29:22.337238Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=testing              actor=agent:testing            All 21 tests passed
+2026-08-12T19:29:22.337548Z [AMB-1786562961488] STAGE_ENTERED            stage=release-readiness    actor=system                   entering stage
+2026-08-12T19:29:22.337674Z [AMB-1786562961488] STAGE_WAITING_APPROVAL   stage=release-readiness    actor=system                   paused for human approval
+2026-08-12T19:29:22.340668Z [AMB-1786562961488] STAGE_APPROVED           stage=release-readiness    actor=human:ronny.ables        Reviewed re-planned design against clarified requirement; approved.
+2026-08-12T19:29:22.340890Z [AMB-1786562961488] STAGE_ENTERED            stage=release-readiness    actor=system                   entering stage
+2026-08-12T19:29:22.340954Z [AMB-1786562961488] STAGE_ATTEMPT_STARTED    stage=release-readiness    actor=agent:release-readiness  attempt 1/1
+2026-08-12T19:29:22.341116Z [AMB-1786562961488] STAGE_SUCCEEDED          stage=release-readiness    actor=agent:release-readiness  Release checklist passed: {testsPassed=true, docsPresent=true, decisionLineageRecorded=true}
+2026-08-12T19:29:22.341503Z [AMB-1786562961488] RUN_COMPLETED            stage=-                    actor=system                   final status=COMPLETED_SUCCESS
