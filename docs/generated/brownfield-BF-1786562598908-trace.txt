@@ -1,0 +1,44 @@
+Run: BF-1786562598908 (brownfield)
+Final status: COMPLETED_WITH_FAILURES
+Metrics: stages=8 succeeded=5 failed=1 rolledBack=1 skipped=1 successRate=62.5% retries=1 retryFreq=0.13 rollbackFreq=0.13 mttr=n/a e2eLatency=820ms
+
+-- stage statuses --
+  release-readiness      SKIPPED
+  requirements           SUCCEEDED
+  task-decomposition     SUCCEEDED
+  design                 SUCCEEDED
+  implementation         ROLLED_BACK
+  testing                FAILED
+  documentation          SUCCEEDED
+  codebase-reasoning     SUCCEEDED
+
+-- full audit timeline --
+2026-08-12T19:23:18.937070Z [BF-1786562598908] RUN_STARTED              stage=-                    actor=system                   workflow started with 8 stages
+2026-08-12T19:23:18.939498Z [BF-1786562598908] STAGE_ENTERED            stage=requirements         actor=system                   entering stage
+2026-08-12T19:23:18.958141Z [BF-1786562598908] STAGE_ATTEMPT_STARTED    stage=requirements         actor=agent:requirements       attempt 1/2
+2026-08-12T19:23:18.999346Z [BF-1786562598908] STAGE_SUCCEEDED          stage=requirements         actor=agent:requirements       Requirement interpreted (1 functional, 0 non-functional); ambiguityDetected=false
+2026-08-12T19:23:19.000039Z [BF-1786562598908] STAGE_ENTERED            stage=codebase-reasoning   actor=system                   entering stage
+2026-08-12T19:23:19.000208Z [BF-1786562598908] STAGE_ATTEMPT_STARTED    stage=codebase-reasoning   actor=agent:codebase-reasoning attempt 1/2
+2026-08-12T19:23:19.085604Z [BF-1786562598908] STAGE_SUCCEEDED          stage=codebase-reasoning   actor=agent:codebase-reasoning Identified 8 impacted file(s) via real static scan of url-shortener/src/main/java
+2026-08-12T19:23:19.086269Z [BF-1786562598908] STAGE_ENTERED            stage=design               actor=system                   entering stage
+2026-08-12T19:23:19.086296Z [BF-1786562598908] STAGE_ATTEMPT_STARTED    stage=design               actor=agent:design             attempt 1/2
+2026-08-12T19:23:19.092660Z [BF-1786562598908] STAGE_SUCCEEDED          stage=design               actor=agent:design             Design produced: 1 API change(s)
+2026-08-12T19:23:19.093401Z [BF-1786562598908] STAGE_ENTERED            stage=task-decomposition   actor=system                   entering stage
+2026-08-12T19:23:19.093427Z [BF-1786562598908] STAGE_ATTEMPT_STARTED    stage=task-decomposition   actor=agent:task-decomposition attempt 1/2
+2026-08-12T19:23:19.105718Z [BF-1786562598908] STAGE_SUCCEEDED          stage=task-decomposition   actor=agent:task-decomposition Decomposed into 5 tasks
+2026-08-12T19:23:19.106098Z [BF-1786562598908] STAGE_ENTERED            stage=implementation       actor=system                   entering stage
+2026-08-12T19:23:19.106141Z [BF-1786562598908] STAGE_ATTEMPT_STARTED    stage=implementation       actor=agent:implementation     attempt 1/3
+2026-08-12T19:23:19.107602Z [BF-1786562598908] STAGE_SUCCEEDED          stage=implementation       actor=agent:implementation     Change plan drafted (attempt 1)
+2026-08-12T19:23:19.107818Z [BF-1786562598908] STAGE_ENTERED            stage=testing              actor=system                   entering stage
+2026-08-12T19:23:19.107844Z [BF-1786562598908] STAGE_ATTEMPT_STARTED    stage=testing              actor=agent:testing            attempt 1/2
+2026-08-12T19:23:19.108619Z [BF-1786562598908] STAGE_ENTERED            stage=documentation        actor=system                   entering stage
+2026-08-12T19:23:19.108646Z [BF-1786562598908] STAGE_ATTEMPT_STARTED    stage=documentation        actor=agent:documentation      attempt 1/2
+2026-08-12T19:23:19.153713Z [BF-1786562598908] STAGE_SUCCEEDED          stage=documentation        actor=agent:documentation      Documentation written to docs/generated/BF-1786562598908-summary.md
+2026-08-12T19:23:19.419033Z [BF-1786562598908] STAGE_ATTEMPT_FAILED     stage=testing              actor=agent:testing            test run reported failures or produced no parseable summary (exit=1)
+2026-08-12T19:23:19.432305Z [BF-1786562598908] STAGE_RETRY_SCHEDULED    stage=testing              actor=system                   retrying in 20ms (attempt 2)
+2026-08-12T19:23:19.452600Z [BF-1786562598908] STAGE_ATTEMPT_STARTED    stage=testing              actor=agent:testing            attempt 2/2
+2026-08-12T19:23:19.735068Z [BF-1786562598908] STAGE_ATTEMPT_FAILED     stage=testing              actor=agent:testing            test run reported failures or produced no parseable summary (exit=1)
+2026-08-12T19:23:19.736151Z [BF-1786562598908] STAGE_FAILED             stage=testing              actor=system                   exhausted retries and fallback: test run reported failures or produced no parseable summary (exit=1)
+2026-08-12T19:23:19.741793Z [BF-1786562598908] STAGE_ROLLED_BACK        stage=implementation       actor=system                   compensating for downstream failure at 'testing': exhausted retries and fallback: test run reported failures or produced no parseable summary (exit=1)
+2026-08-12T19:23:19.742005Z [BF-1786562598908] STAGE_SKIPPED            stage=release-readiness    actor=system                   one or more dependencies failed or were rolled back
+2026-08-12T19:23:19.742971Z [BF-1786562598908] RUN_COMPLETED            stage=-                    actor=system                   final status=COMPLETED_WITH_FAILURES

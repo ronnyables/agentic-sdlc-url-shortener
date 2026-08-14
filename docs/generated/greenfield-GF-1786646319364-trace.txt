@@ -1,0 +1,40 @@
+Run: GF-1786646319364 (greenfield)
+Final status: COMPLETED_WITH_FAILURES
+Metrics: stages=7 succeeded=4 failed=1 rolledBack=1 skipped=1 successRate=57.1% retries=1 retryFreq=0.14 rollbackFreq=0.14 mttr=n/a e2eLatency=178ms
+
+-- stage statuses --
+  release-readiness      SKIPPED
+  requirements           SUCCEEDED
+  task-decomposition     SUCCEEDED
+  design                 SUCCEEDED
+  implementation         ROLLED_BACK
+  testing                FAILED
+  documentation          SUCCEEDED
+
+-- full audit timeline --
+2026-08-13T18:38:39.393216Z [GF-1786646319364] RUN_STARTED              stage=-                    actor=system                   workflow started with 7 stages
+2026-08-13T18:38:39.395984Z [GF-1786646319364] STAGE_ENTERED            stage=requirements         actor=system                   entering stage
+2026-08-13T18:38:39.411981Z [GF-1786646319364] STAGE_ATTEMPT_STARTED    stage=requirements         actor=agent:requirements       attempt 1/2
+2026-08-13T18:38:39.454042Z [GF-1786646319364] STAGE_SUCCEEDED          stage=requirements         actor=agent:requirements       Requirement interpreted (1 functional, 1 non-functional); ambiguityDetected=false
+2026-08-13T18:38:39.455632Z [GF-1786646319364] STAGE_ENTERED            stage=design               actor=system                   entering stage
+2026-08-13T18:38:39.455662Z [GF-1786646319364] STAGE_ATTEMPT_STARTED    stage=design               actor=agent:design             attempt 1/2
+2026-08-13T18:38:39.462615Z [GF-1786646319364] STAGE_SUCCEEDED          stage=design               actor=agent:design             Design produced: 1 API change(s)
+2026-08-13T18:38:39.463249Z [GF-1786646319364] STAGE_ENTERED            stage=task-decomposition   actor=system                   entering stage
+2026-08-13T18:38:39.463276Z [GF-1786646319364] STAGE_ATTEMPT_STARTED    stage=task-decomposition   actor=agent:task-decomposition attempt 1/2
+2026-08-13T18:38:39.480374Z [GF-1786646319364] STAGE_SUCCEEDED          stage=task-decomposition   actor=agent:task-decomposition Decomposed into 5 tasks
+2026-08-13T18:38:39.481010Z [GF-1786646319364] STAGE_ENTERED            stage=implementation       actor=system                   entering stage
+2026-08-13T18:38:39.481060Z [GF-1786646319364] STAGE_ATTEMPT_STARTED    stage=implementation       actor=agent:implementation     attempt 1/3
+2026-08-13T18:38:39.489326Z [GF-1786646319364] STAGE_SUCCEEDED          stage=implementation       actor=agent:implementation     Change plan drafted (attempt 1)
+2026-08-13T18:38:39.489844Z [GF-1786646319364] STAGE_ENTERED            stage=testing              actor=system                   entering stage
+2026-08-13T18:38:39.489874Z [GF-1786646319364] STAGE_ATTEMPT_STARTED    stage=testing              actor=agent:testing            attempt 1/2
+2026-08-13T18:38:39.489981Z [GF-1786646319364] STAGE_ENTERED            stage=documentation        actor=system                   entering stage
+2026-08-13T18:38:39.490009Z [GF-1786646319364] STAGE_ATTEMPT_STARTED    stage=documentation        actor=agent:documentation      attempt 1/2
+2026-08-13T18:38:39.506054Z [GF-1786646319364] STAGE_ATTEMPT_FAILED     stage=testing              actor=agent:testing            could not launch Maven ('mvn' on PATH is required to run tests for the Spring Boot module): Cannot run program "mvn": error=2, No such file or directory
+2026-08-13T18:38:39.527425Z [GF-1786646319364] STAGE_RETRY_SCHEDULED    stage=testing              actor=system                   retrying in 20ms (attempt 2)
+2026-08-13T18:38:39.536233Z [GF-1786646319364] STAGE_SUCCEEDED          stage=documentation        actor=agent:documentation      Documentation written to docs/generated/GF-1786646319364-summary.md
+2026-08-13T18:38:39.547957Z [GF-1786646319364] STAGE_ATTEMPT_STARTED    stage=testing              actor=agent:testing            attempt 2/2
+2026-08-13T18:38:39.548691Z [GF-1786646319364] STAGE_ATTEMPT_FAILED     stage=testing              actor=agent:testing            could not launch Maven ('mvn' on PATH is required to run tests for the Spring Boot module): Cannot run program "mvn": error=2, No such file or directory
+2026-08-13T18:38:39.549011Z [GF-1786646319364] STAGE_FAILED             stage=testing              actor=system                   exhausted retries and fallback: could not launch Maven ('mvn' on PATH is required to run tests for the Spring Boot module): Cannot run program "mvn": error=2, No such file or directory
+2026-08-13T18:38:39.554570Z [GF-1786646319364] STAGE_ROLLED_BACK        stage=implementation       actor=system                   compensating for downstream failure at 'testing': exhausted retries and fallback: could not launch Maven ('mvn' on PATH is required to run tests for the Spring Boot module): Cannot run program "mvn": error=2, No such file or directory
+2026-08-13T18:38:39.554697Z [GF-1786646319364] STAGE_SKIPPED            stage=release-readiness    actor=system                   one or more dependencies failed or were rolled back
+2026-08-13T18:38:39.556675Z [GF-1786646319364] RUN_COMPLETED            stage=-                    actor=system                   final status=COMPLETED_WITH_FAILURES

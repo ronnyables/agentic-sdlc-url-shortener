@@ -1,0 +1,35 @@
+
+# Maven (url-shortener-spring)
+url-shortener-spring/target/
+target/
+ 
+# Zero-dependency build output (url-shortener, orchestrator)
+url-shortener/bin/
+orchestrator/bin/
+ 
+# Compiled class files anywhere
+*.class
+ 
+# H2 database files (if run locally without Docker)
+*.mv.db
+*.trace.db
+ 
+# IDEs
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+.DS_Store
+ 
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+ 
+# Logs
+*.log
+ 
+# Temp files used by scripts/compile.sh
+/tmp/_sources_*.txt
