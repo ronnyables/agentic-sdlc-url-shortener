@@ -50,7 +50,14 @@ public final class TestingAgent implements StageExecutor {
     public StageResult execute(WorkflowContext context, int attemptNumber) throws Exception {
         Path pom = Path.of(mavenProjectDir, "pom.xml");
 
-        List<String> command = new ArrayList<>(List.of("mvn", "-q", "-B", "-f", pom.toString()));
+        // No "-q": Surefire's own "Tests run: X, Failures: Y, Errors: Z, Skipped: W"
+        // summary line is what SUMMARY below parses to determine pass/fail, and -q
+        // suppresses it - which surfaced as a real bug the first time this ran
+        // against a working Maven install: mvn genuinely exited 0 (all tests passed)
+        // but the quiet flag meant no summary line ever reached this agent's output
+        // buffer, so it reported failure anyway. -B (batch mode, no interactive
+        // prompts) is kept since it's still needed for non-interactive CI-style runs.
+        List<String> command = new ArrayList<>(List.of("mvn", "-B", "-f", pom.toString()));
         if (explicitTestClasses != null && !explicitTestClasses.isEmpty()) {
             command.add("-Dtest=" + String.join(",", explicitTestClasses));
         }
