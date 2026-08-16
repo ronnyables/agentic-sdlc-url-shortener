@@ -16,6 +16,8 @@ This was built and verified in a sandboxed environment with no route to Maven Ce
 
 ### Spring Boot build (recommended — requires Maven + internet access)
 
+**Prerequisites:** JDK **17 or 21** on `PATH`/`JAVA_HOME` (Spring Boot 3.2.5's bundled Mockito/Byte Buddy version doesn't support very new JDKs — e.g. Java 26 fails `mvn test` with a Byte Buddy instrumentation error; if `java -version` shows something newer than 21 and you hit that, install 21 and point `JAVA_HOME` at it: `export JAVA_HOME=$(/usr/libexec/java_home -v21)`).
+
 ```bash
 scripts/test-spring.sh                     # mvn test — unit + web-slice + repository + full-stack integration tests
 scripts/run-url-shortener-spring.sh        # starts on http://localhost:8080 (embedded H2)
@@ -23,6 +25,19 @@ scripts/run-scenario-spring.sh greenfield  # orchestrator drives a real `mvn tes
 scripts/run-scenario-spring.sh brownfield
 scripts/run-scenario-spring.sh ambiguous
 ```
+
+Once it's running, try it:
+
+```bash
+curl -X POST http://localhost:8080/api/urls \
+  -H "Content-Type: application/json" \
+  -d '{"url":"https://example.com"}'
+# -> {"code":"aB3xY9","shortUrl":"http://localhost:8080/aB3xY9",...}
+
+curl -iL http://localhost:8080/aB3xY9   # swap in the code you got back; follows the redirect
+```
+
+Note the request field is `url`, not `longUrl`. There's no page at bare `/` — this is an API-only service, so hitting `http://localhost:8080/` directly returns a 404 by design.
 
 ### Zero-dependency reference build (requires only a JDK — what I verified directly in this sandbox)
 

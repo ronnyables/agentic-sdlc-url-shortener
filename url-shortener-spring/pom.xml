@@ -80,6 +80,24 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <!--
+                  This pom targets Java 17 (see java.version above), but Surefire runs
+                  tests on whatever JDK is on the developer's PATH/JAVA_HOME - which may
+                  be newer. Mockito's inline mock maker (used by @MockBean in the
+                  @WebMvcTest slice tests) depends on Byte Buddy, which does not
+                  recognize very new JDK class-file versions until it's explicitly
+                  updated for them; without this flag, mocking any class on an
+                  unrecognized JDK fails with "Java N is not supported by the current
+                  version of Byte Buddy". net.bytebuddy.experimental=true tells Byte
+                  Buddy to proceed anyway. Harmless on older, already-supported JDKs.
+                -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>-Dnet.bytebuddy.experimental=true</argLine>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

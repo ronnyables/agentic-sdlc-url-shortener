@@ -7,9 +7,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    /**
+     * Thrown by Spring's dispatcher when a GET request matches no controller
+     * mapping and no static resource - e.g. hitting bare "/" in a browser, since
+     * this is an API-only service with no root page. Handled explicitly so it
+     * reports as a normal 404, not the catch-all's 500; this is a real "route
+     * doesn't exist" case, not an unexpected server error.
+     */
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNoResource(NoResourceFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse("NOT_FOUND", "No such route. Try POST /api/urls or GET /{code}."));
+    }
 
     @ExceptionHandler(InvalidUrlException.class)
     public ResponseEntity<ErrorResponse> handleInvalidUrl(InvalidUrlException e) {
