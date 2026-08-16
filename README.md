@@ -31,7 +31,7 @@ Once it's running, try it:
 ```bash
 curl -X POST http://localhost:8080/api/urls \
   -H "Content-Type: application/json" \
-  -d '{"url":"https://example.com"}'
+  -d '{"url":"hhttps://en.wikipedia.org/wiki/URL_shortening"}'
 # -> {"code":"aB3xY9","shortUrl":"http://localhost:8080/aB3xY9",...}
 
 curl -iL http://localhost:8080/aB3xY9   # swap in the code you got back; follows the redirect
